@@ -1,0 +1,8 @@
+[project]
+name = "n1-clinical-tool-calling"
+version = "0.1.0"
+description = "Add your description here"
+requires-python = ">=3.12"
+dependencies = [
+    "anthropic>=1.14.0",
+]
