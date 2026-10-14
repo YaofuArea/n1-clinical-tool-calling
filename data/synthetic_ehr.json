@@ -1,0 +1,48 @@
+{
+  "_note": "Synthetic demo data. These patients are invented and contain no real PHI.",
+  "patients": [
+    {
+      "id": "P001",
+      "name": "Maria Alvarez",
+      "birth_date": "1961-03-14",
+      "allergies": ["penicillin"],
+      "medications": [
+        {"name": "metformin", "dose": "500 mg twice daily", "start": "2025-02-10", "end": null},
+        {"name": "lisinopril", "dose": "10 mg daily", "start": "2024-08-01", "end": null}
+      ],
+      "labs": [
+        {"test": "HbA1c", "value": 8.4, "unit": "%", "date": "2025-01-20"},
+        {"test": "HbA1c", "value": 7.6, "unit": "%", "date": "2025-07-18"},
+        {"test": "HbA1c", "value": 7.1, "unit": "%", "date": "2026-01-22"},
+        {"test": "LDL", "value": 131, "unit": "mg/dL", "date": "2026-01-22"}
+      ]
+    },
+    {
+      "id": "P002",
+      "name": "James Okafor",
+      "birth_date": "1978-11-02",
+      "allergies": [],
+      "medications": [
+        {"name": "atorvastatin", "dose": "20 mg daily", "start": "2025-09-05", "end": null}
+      ],
+      "labs": [
+        {"test": "LDL", "value": 172, "unit": "mg/dL", "date": "2025-08-30"},
+        {"test": "LDL", "value": 118, "unit": "mg/dL", "date": "2026-02-12"}
+      ]
+    },
+    {
+      "id": "P003",
+      "name": "Maria Chen",
+      "birth_date": "1990-06-25",
+      "allergies": ["sulfa drugs", "latex"],
+      "medications": [
+        {"name": "levothyroxine", "dose": "50 mcg daily", "start": "2023-04-11", "end": null},
+        {"name": "sertraline", "dose": "50 mg daily", "start": "2024-01-15", "end": "2025-06-30"}
+      ],
+      "labs": [
+        {"test": "TSH", "value": 5.9, "unit": "mIU/L", "date": "2025-10-03"},
+        {"test": "TSH", "value": 2.4, "unit": "mIU/L", "date": "2026-03-09"}
+      ]
+    }
+  ]
+}
