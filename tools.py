@@ -29,7 +29,9 @@ def search_patients(name: str) -> list[dict]:
 
 def _get_patient(patient_id: str) -> dict:
     if patient_id not in PATIENTS:
-        raise ToolError(f"unknown patient_id {patient_id!r}; call search_patients first")
+        raise ToolError(
+            f"unknown patient_id {patient_id!r}; call search_patients first"
+        )
     return PATIENTS[patient_id]
 
 
@@ -42,6 +44,7 @@ def get_lab_results(patient_id: str, test_name: str) -> list[dict]:
 def get_medications(patient_id: str) -> dict:
     patient = _get_patient(patient_id)
     return {"medications": patient["medications"], "allergies": patient["allergies"]}
+
 
 def list_lab_tests(patient_id: str) -> list[str]:
     labs = _get_patient(patient_id)["labs"]
@@ -62,7 +65,12 @@ TOOLS = [
         "strict": True,
         "input_schema": {
             "type": "object",
-            "properties": {"name": {"type": "string", "description": "Full or partial patient name"}},
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Full or partial patient name",
+                }
+            },
             "required": ["name"],
             "additionalProperties": False,
         },
@@ -78,8 +86,14 @@ TOOLS = [
         "input_schema": {
             "type": "object",
             "properties": {
-                "patient_id": {"type": "string", "description": "ID from search_patients, e.g. P001"},
-                "test_name": {"type": "string", "description": "Lab test name, e.g. HbA1c"},
+                "patient_id": {
+                    "type": "string",
+                    "description": "ID from search_patients, e.g. P001",
+                },
+                "test_name": {
+                    "type": "string",
+                    "description": "Lab test name, e.g. HbA1c",
+                },
             },
             "required": ["patient_id", "test_name"],
             "additionalProperties": False,
@@ -94,26 +108,37 @@ TOOLS = [
         "strict": True,
         "input_schema": {
             "type": "object",
-            "properties": {"patient_id": {"type": "string", "description": "ID from search_patients"}},
+            "properties": {
+                "patient_id": {
+                    "type": "string",
+                    "description": "ID from search_patients",
+                }
+            },
             "required": ["patient_id"],
             "additionalProperties": False,
         },
     },
-{
+    {
         "name": "list_lab_tests",
         "description": (
-            "List the names of all lab tests a patient has results for, e.g. [\"HbA1c\", \"LDL\"]. "
+            'List the names of all lab tests a patient has results for, e.g. ["HbA1c", "LDL"]. '
             "Use this to see what data exists before calling get_lab_results, "
             "or to tell the user which tests are available."
         ),
         "strict": True,
         "input_schema": {
             "type": "object",
-            "properties": {"patient_id": {"type": "string", "description": "ID from search_patients"}},
+            "properties": {
+                "patient_id": {
+                    "type": "string",
+                    "description": "ID from search_patients",
+                }
+            },
             "required": ["patient_id"],
             "additionalProperties": False,
         },
-    },]
+    },
+]
 
 FUNCTIONS = {
     "search_patients": search_patients,

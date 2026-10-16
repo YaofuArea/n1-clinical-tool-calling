@@ -62,9 +62,16 @@ def ask(question: str, verbose: bool = True) -> str:
             result, is_error = run_tool(block.name, block.input)
             if verbose:
                 flag = " (error)" if is_error else ""
-                print(f"  [turn {turn}] {block.name}({block.input}) -> {result[:120]}{flag}")
+                print(
+                    f"  [turn {turn}] {block.name}({block.input}) -> {result[:120]}{flag}"
+                )
             tool_results.append(
-                {"type": "tool_result", "tool_use_id": block.id, "content": result, "is_error": is_error}
+                {
+                    "type": "tool_result",
+                    "tool_use_id": block.id,
+                    "content": result,
+                    "is_error": is_error,
+                }
             )
         messages.append({"role": "user", "content": tool_results})
 
@@ -72,6 +79,9 @@ def ask(question: str, verbose: bool = True) -> str:
 
 
 if __name__ == "__main__":
-    question = " ".join(sys.argv[1:]) or "What is Maria Alvarez's HbA1c trend, and is she on any diabetes medication?"
+    question = (
+        " ".join(sys.argv[1:])
+        or "What is Maria Alvarez's HbA1c trend, and is she on any diabetes medication?"
+    )
     print(f"Q: {question}\n")
     print(f"\nA: {ask(question)}")
