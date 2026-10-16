@@ -44,7 +44,6 @@ uv run agent_runner.py "Which Maria is allergic to latex?"
 
 ## Experiments
 
-<!-- TODO(me): run each of these and write down what actually happened. -->
 
 | # | Question | What I expected | What happened |
 |---|---|---|---|
@@ -55,9 +54,10 @@ uv run agent_runner.py "Which Maria is allergic to latex?"
 
 ## What I learned / pitfalls
 
-<!-- TODO(me): in my own words. Examples of things worth noting:
-- how many turns did a question take, and why
-- did Claude call tools in parallel?
-- what changed when I rewrote a tool description?
-- what's different between agent.py and agent_runner.py?
--->
+- **The model decides, my code executes.** Claude never runs a tool itself. It returns a `tool_use` request, my loop runs the Python function, and sends the result back. The loop ends when `stop_reason` is no longer `tool_use`.
+- **Independent calls run in parallel.** In experiment 1, Claude fetched labs and medications in the same turn because neither needed the other's result. All tool results for a turn must go back in a single message.
+- **Tool descriptions leak into answers.** In experiment 3, Claude offered to check HbA1c for a patient who has none, because the tool description listed it as an example test. Descriptions steer behavior, so every word in them matters.
+- **A new tool fixed it, but not the way I described.** After adding `list_lab_tests`, Claude stopped guessing. It called the tool after an empty result, not before as the description suggested, which cost one extra request but was a reasonable choice.
+- **Don't trust model arithmetic in clinical answers.** The tool runner version reported "about a 31% drop" in LDL. The math was right, but the tool never returned it. In a real system, derived numbers should come from code.
+- **Hand-written loop vs. tool runner.** The manual loop shows every turn and lets me control errors and limits. The tool runner is shorter, but I can't see which tools it called.
+- **Limitation: single-turn only.** In experiment 2 the agent correctly asked which Maria I meant, but `agent.py` exits after one answer, so I can't reply. Multi-turn conversation is the next improvement.
