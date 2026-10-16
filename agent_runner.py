@@ -54,12 +54,24 @@ def get_medications(patient_id: str) -> str:
     return _call("get_medications", {"patient_id": patient_id})
 
 
+@beta_tool
+def list_lab_tests(patient_id: str) -> str:
+    """List the names of all lab tests a patient has results for.
+
+    Use this to see what data exists, e.g. after get_lab_results returns nothing.
+
+    Args:
+        patient_id: ID from search_patients.
+    """
+    return _call("list_lab_tests", {"patient_id": patient_id})
+
+
 def ask(question: str) -> str:
     runner = anthropic.Anthropic().beta.messages.tool_runner(
         model=MODEL,
         max_tokens=16000,
         system=SYSTEM,
-        tools=[search_patients, get_lab_results, get_medications],
+        tools=[search_patients, get_lab_results, get_medications, list_lab_tests],
         messages=[{"role": "user", "content": question}],
         output_config={"effort": "medium"},
         max_iterations=MAX_TURNS,
