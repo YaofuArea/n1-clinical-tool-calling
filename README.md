@@ -50,7 +50,7 @@ uv run agent_runner.py "Which Maria is allergic to latex?"
 |---|---|---|---|
 | 1 | Maria Alvarez's HbA1c trend | 3 values, falling 8.4 → 7.1 | 3 turns: searched for the patient first, then fetched labs and medications in parallel. Answer matched (8.4 → 7.6 → 7.1, each with a date), and it noted metformin started after the first result without claiming it caused the drop.|
 | 2 | "What medications is Maria on?" (two Marias) | asks which Maria | 2 turns: search returned both Marias, then it stopped and asked which one, listing birth dates, without fetching anyone's medications. Limitation: agent.py is single-turn, so I can't answer its question yet.|
-| 3 | James Okafor's TSH (no data) | says no TSH results | |
+| 3 | James Okafor's TSH (no data) | says no TSH results | 3 turns: found P002, TSH search returned an empty list, and it said there are no TSH values without inventing one. But it offered to check HbA1c, which James doesn't have; it copied the example tests from the tool description. A list_lab_tests tool would fix this.|
 | 4 | | | |
 
 ## What I learned / pitfalls
