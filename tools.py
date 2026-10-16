@@ -43,6 +43,10 @@ def get_medications(patient_id: str) -> dict:
     patient = _get_patient(patient_id)
     return {"medications": patient["medications"], "allergies": patient["allergies"]}
 
+def list_lab_tests(patient_id: str) -> list[str]:
+    labs = _get_patient(patient_id)["labs"]
+    return sorted({lab["test"] for lab in labs})
+
 
 # What Claude sees. The description is the main thing that decides *when* Claude
 # picks a tool, so it says what the tool returns and when to use it.
@@ -95,12 +99,27 @@ TOOLS = [
             "additionalProperties": False,
         },
     },
-]
+{
+        "name": "list_lab_tests",
+        "description": (
+            "List the names of all lab tests a patient has results for, e.g. [\"HbA1c\", \"LDL\"]. "
+            "Use this to see what data exists before calling get_lab_results, "
+            "or to tell the user which tests are available."
+        ),
+        "strict": True,
+        "input_schema": {
+            "type": "object",
+            "properties": {"patient_id": {"type": "string", "description": "ID from search_patients"}},
+            "required": ["patient_id"],
+            "additionalProperties": False,
+        },
+    },]
 
 FUNCTIONS = {
     "search_patients": search_patients,
     "get_lab_results": get_lab_results,
     "get_medications": get_medications,
+    "list_lab_tests": list_lab_tests,
 }
 
 
