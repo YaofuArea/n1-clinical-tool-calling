@@ -18,7 +18,7 @@ question ─▶ Claude (+ tool definitions)
 
 | File | What it is |
 |---|---|
-| `tools.py` | 3 tools (`search_patients`, `get_lab_results`, `get_medications`), their JSON schemas, and `run_tool()` |
+| `tools.py` | 4 tools (`search_patients`, `get_lab_results`, `get_medications`, `list_lab_tests`), their JSON schemas, and `run_tool()` |
 | `agent.py` | The agent loop written by hand: every request, tool call, and tool result is explicit |
 | `agent_runner.py` | The same agent using the SDK's tool runner, which owns the loop |
 | `data/synthetic_ehr.json` | 3 synthetic patients (two of them are named Maria, on purpose) |
@@ -51,7 +51,7 @@ uv run agent_runner.py "Which Maria is allergic to latex?"
 | 1 | Maria Alvarez's HbA1c trend | 3 values, falling 8.4 → 7.1 | 3 turns: searched for the patient first, then fetched labs and medications in parallel. Answer matched (8.4 → 7.6 → 7.1, each with a date), and it noted metformin started after the first result without claiming it caused the drop.|
 | 2 | "What medications is Maria on?" (two Marias) | asks which Maria | 2 turns: search returned both Marias, then it stopped and asked which one, listing birth dates, without fetching anyone's medications. Limitation: agent.py is single-turn, so I can't answer its question yet.|
 | 3 | James Okafor's TSH (no data) | says no TSH results | 3 turns: found P002, TSH search returned an empty list, and it said there are no TSH values without inventing one. But it offered to check HbA1c, which James doesn't have; it copied the example tests from the tool description. A list_lab_tests tool would fix this.|
-| 4 | | | |
+| 4 | James Okafor's TSH, after adding list_lab_tests | says only LDL exists | 4 turns: TSH search was empty, then it called list_lab_tests and correctly said only LDL exists (no more guessing HbA1c). It used the new tool after the empty result, not before as the description suggested. One extra request for a more accurate answer. |
 
 ## What I learned / pitfalls
 
