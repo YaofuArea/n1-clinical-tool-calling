@@ -48,7 +48,7 @@ uv run agent_runner.py "Which Maria is allergic to latex?"
 
 | # | Question | What I expected | What happened |
 |---|---|---|---|
-| 1 | Maria Alvarez's HbA1c trend | 3 values, falling 8.4 → 7.1 | |
+| 1 | Maria Alvarez's HbA1c trend | 3 values, falling 8.4 → 7.1 | 3 turns: searched for the patient first, then fetched labs and medications in parallel. Answer matched (8.4 → 7.6 → 7.1, each with a date), and it noted metformin started after the first result without claiming it caused the drop.|
 | 2 | "What medications is Maria on?" (two Marias) | asks which Maria | |
 | 3 | James Okafor's TSH (no data) | says no TSH results | |
 | 4 | | | |
